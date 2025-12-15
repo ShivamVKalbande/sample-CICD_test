@@ -1,38 +1,36 @@
-name: Deploy React + Vite Github pages
+name: Deploy React + Vite to GitHub Pages
 
 on:
   push:
     branches:
-      -master
-    
-  
+      - master
+
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      #checkout repo
-        -name: checkout code
+      # Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
-        
 
-        # setup Nodejs
-        -name: Setup Node.js
+      # Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
-       
-        # Install dependencies
-        -name: Install Dependencies
-        uses: npm install
 
-         # Build the project
-        -name: Build Project
-        uses: npm run 
-        
-         # deploy to github pages
-        -name: Deploy to github pages
-         uses: peaceiries/actions-gh-pages@v3
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Build project
+      - name: Build project
+        run: npm run build
+
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-            github_token:${{ secrets.GITHUB_TOKEN}}
-            publish_dir: dist
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
